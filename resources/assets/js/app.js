@@ -20,6 +20,7 @@ Vue.use(Vuex);
  */
 
 Vue.component('conversations-dashboard', require('./components/ConversationsDashboard.vue'));
+Vue.component('conversations', require('./components/Conversations.vue'));
 
 import store from './store/index'
 

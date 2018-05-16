@@ -19,7 +19,6 @@ class ConversationController extends Controller
 
        $conversations = $request->user()->conversations()->get();
 
-        //dd($conversations);
 
         $result =  fractal()
             ->collection($conversations)
@@ -27,7 +26,7 @@ class ConversationController extends Controller
             ->transformWith(new ConversationTransformer)
             ->toArray();
 
-        dd($result);
+        return $result;
 
    }
 
