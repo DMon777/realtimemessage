@@ -1,0 +1,63 @@
+<template>
+    <div v-if="loading">
+        <div class="loader"></div>
+    </div>
+
+    <div v-else-if="conversation">
+
+
+        <ul class="list-inline" v-if = "conversation.users.data.length">
+            <li> <strong>in conversation</strong> </li>
+            <li v-for = "user in conversation.users.data" > {{ user.name }} </li>
+        </ul>
+
+        <hr>
+
+        <div class="media" v-for = "reply in conversation.replies.data">
+            <div class="media-left">
+                <img v-bind:src = "reply.user.data.avatar" v-bind:alt="reply.user.data.name + 'avatar'">
+            </div>
+            <div class="media-body">
+                <p>{{ reply.user.data.name }} &bull; {{ reply.created_at_human  }} </p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{ reply.body }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="media">
+            <div class="media-left">
+                <img v-bind:src = "conversation.user.data.avatar" v-bind:alt="conversation.user.data.name + 'avatar'">
+            </div>
+            <div class="media-body">
+                <p>{{ conversation.user.data.name }} &bull; {{ conversation.created_at_human  }} </p>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {{ conversation.body }}
+                    </div>
+                </div>
+            </div>
+
+
+       </div>
+
+    </div>
+    <div v-else> Choose a conversation </div>
+
+</template>
+
+<script>
+    import { mapActions, mapGetters } from 'vuex'
+
+    export default {
+
+        computed: mapGetters({
+            conversation: 'currentConversation',
+            loading : 'loadingConversation'
+        }),
+
+
+    }
+</script>

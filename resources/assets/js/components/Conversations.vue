@@ -4,41 +4,51 @@
          Conversations
       </div>
       <div class="panel-body">
-         <div class="media" v-for = 'conversation in conversations'>
+         <div class = "loader" v-if = "loading">  </div>
+         <div class="media" v-for = 'conversation in conversations' v-else-if="conversations.length" >
             <div class="media-body">
-               {{ conversation.body }}
+               <a href="" @click.prevent = "getConversation(conversation.id)"> {{ trunc(conversation.body,50) }} </a>
+               <p class="text-module">
+                  You and {{ conversation.participant_count }} {{ pluralize('other',conversation.participant_count) }}
+               </p>
+               <ul class="list-inline">
+                  <li>
+                     <img v-bind:src = "user.avatar" v-bind:alt = "user.name + 'avatar'" v-bind:title = "user.name"
+                     v-for = "user in conversation.users.data">
+                  </li>
+                  <li>
+                     last reply {{ conversation.last_reply_human }}
+                  </li>
+               </ul>
             </div>
          </div>
-      </div>
-      <div class="row">
-         <div v-for = 'item in allData'>{{item}}</div>
+         <div v-else > No conversations </div>
+
       </div>
    </div>
 </template>
 
 <script>
 
+    import trunc from '../helpers/trunc'
     import { mapActions,mapGetters } from 'vuex'
+    import pluralize from 'pluralize'
+
     export default {
         computed: mapGetters({
             conversations: 'allConversations',
-            allData : "allData"
+            loading : "loadingConversations"
         }),
         methods: {
             ...mapActions([
                 'getConversations',
-                'getAllData'
-            ])
-        },
-        beforeMount () {
-            console.log(this.conversations)
-            console.log(this.allData)
-            this.getConversations(1)
-            this.getAllData()
+                'getConversation',
+            ]),
+            trunc : trunc,
+            pluralize : pluralize,
         },
         mounted () {
-
-
+            this.getConversations(1)
         }
 
     }

@@ -3,37 +3,36 @@ import api from '../api/all'
 
 const state = {
     conversations : [],
-    loadingConversation : false,
-    allData : []
+    loadingConversations : false,
 }
 
 const getters = {
     allConversations: state => {
         return state.conversations
     },
-    allData : state => {
-        return state.allData
-    }
+    loadingConversations: state => {
+        return state.loadingConversations
+    },
 }
 
 const actions = {
     getConversations({dispatch,commit},page) {
+        commit('setConversationsLoading', true)
         api.getConversations(1).then((response) => {
             commit('setConversations', response.data.data)
+            commit('setConversationsLoading', false)
         })
+
     },
-    getAllData : ({dispatch,commit}) => {
-        commit("setAllData",[1,2,3])
-    }
 }
 
 const mutations = {
     setConversations (state, conversations) {
         state.conversations = conversations
     },
-    setAllData: (state,data) => {
-        state.allData = data
-    }
+    setConversationsLoading (state, status) {
+        state.loadingConversations = status
+    },
 }
 
 const modules = {

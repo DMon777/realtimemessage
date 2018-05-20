@@ -9,9 +9,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
+// import Vuex from 'vuex';
+//
+// Vue.use(Vuex);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -21,6 +21,7 @@ Vue.use(Vuex);
 
 Vue.component('conversations-dashboard', require('./components/ConversationsDashboard.vue'));
 Vue.component('conversations', require('./components/Conversations.vue'));
+Vue.component('conversation', require('./components/Conversation.vue'));
 
 import store from './store/index'
 

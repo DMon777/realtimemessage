@@ -6,7 +6,7 @@
                 <conversations></conversations>
             </div>
             <div class="col-sm-7">
-                Conversation
+                <conversation> </conversation>
             </div>
 
         </div>
