@@ -38,4 +38,9 @@ class ConversationReplyController extends Controller
             ->toArray();
     }
 
+    protected function test()
+    {
+        return null;
+    }
+
 }
