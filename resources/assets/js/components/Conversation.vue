@@ -13,6 +13,11 @@
 
         <hr>
 
+
+        <conversation-reply-form></conversation-reply-form>
+
+        <hr>
+
         <div class="media" v-for = "reply in conversation.replies.data">
             <div class="media-left">
                 <img v-bind:src = "reply.user.data.avatar" v-bind:alt="reply.user.data.name + 'avatar'">
@@ -53,10 +58,24 @@
 
     export default {
 
+        props : [
+          'id'
+        ],
+
         computed: mapGetters({
             conversation: 'currentConversation',
             loading : 'loadingConversation'
         }),
+        methods : {
+            ...mapActions([
+                'getConversation',
+            ])
+        },
+        mounted(){
+            if(this.id !== null){
+                this.getConversation(this.id);
+            }
+        }
 
 
     }

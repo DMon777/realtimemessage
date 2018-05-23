@@ -21,7 +21,20 @@ const actions = {
             commit('setConversation',response.data.data)
             commit('setConversationLoading', false)
         })
-    }
+        window.history.pushState(null, null, '/conversations/' + id)
+    },
+
+    createConversationReply ({dispatch, commit}, {id, body}) {
+
+        api.storeConversationReply(id, {
+            body: body
+        });
+        // .then((response) => {
+        //     commit('appendToConversation', response.data.data)
+        //     commit('prependToConversations', response.data.data.parent.data)
+        // })
+    },
+
 }
 
 const mutations = {
