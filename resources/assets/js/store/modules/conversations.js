@@ -33,6 +33,15 @@ const mutations = {
     setConversationsLoading (state, status) {
         state.loadingConversations = status
     },
+    /* сортируем беседы, то есть беседа в которой сообщение было написано позже переносится вверх */
+    prependToConversations (state, conversation) {
+
+        state.conversations = state.conversations.filter((c) => {
+            return c.id !== conversation.id
+        })
+
+         state.conversations.unshift(conversation)
+    },
 }
 
 const modules = {

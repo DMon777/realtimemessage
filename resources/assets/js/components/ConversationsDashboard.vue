@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col-sm-5">
 
+                <conversation-form></conversation-form>
                 <conversations></conversations>
             </div>
             <div class="col-sm-7">

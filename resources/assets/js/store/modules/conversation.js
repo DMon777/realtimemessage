@@ -26,13 +26,13 @@ const actions = {
 
     createConversationReply ({dispatch, commit}, {id, body}) {
 
-        api.storeConversationReply(id, {
+       return api.storeConversationReply(id, {
             body: body
-        });
-        // .then((response) => {
-        //     commit('appendToConversation', response.data.data)
-        //     commit('prependToConversations', response.data.data.parent.data)
-        // })
+        })
+        .then((response) => {
+            commit('appendToConversation', response.data.data);
+            commit('prependToConversations', response.data.data.parent.data)
+        })
     },
 
 }
@@ -42,6 +42,10 @@ const mutations = {
         state.conversation = conversation
     },setConversationLoading (state, status) {
         state.loadingConversation = status
+    },
+    appendToConversation (state, reply) {
+        // unshift добавляет элемент в начало массива
+        state.conversation.replies.data.unshift(reply)
     },
 }
 

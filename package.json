@@ -19,6 +19,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "algoliasearch": "^3.27.1",
+        "autocomplete.js": "^0.30.0",
         "pluralize": "^7.0.0",
         "vuex": "^3.0.1"
     }
