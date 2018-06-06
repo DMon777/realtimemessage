@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Conversation;
 use App\Transformers\ConversationTransformer;
 use App\Http\Requests\StoreConversationReplyRequest;
+use App\Events\ConversationReplyCreated;
+
 
 class ConversationReplyController extends Controller
 {
@@ -30,6 +32,8 @@ class ConversationReplyController extends Controller
 
         $conversation->replies()->save($reply);
         $conversation->touchLastReply();
+
+        broadcast(new ConversationReplyCreated($reply))->toOthers();
 
         return fractal()
             ->item($reply)

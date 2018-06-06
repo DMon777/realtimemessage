@@ -27,7 +27,7 @@
 </template>
 
 <script>
-//    import { mapActions, mapGetters } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import { userautocomplete } from '../../helpers/autocomplete'
 
     export default {
@@ -38,43 +38,45 @@
             }
         },
         methods: {
-//            ...mapActions([
-//                'createConversation'
-//            ]),
-//            addRecipient (recipient) {
-//                var existing = this.recipients.find((r) => {
-//                    return r.id === recipient.id
-//                })
-//
-//                if (typeof existing !== 'undefined') {
-//                    return
-//                }
-//
-//                this.recipients.push(recipient)
-//            },
-//            removeRecipient (recipient) {
-//                this.recipients = this.recipients.filter((r) => {
-//                    return r.id !== recipient.id
-//                })
-//            },
-//            send () {
-//                this.createConversation({
-//                    recipientIds: this.recipients.map((r) => {
-//                        return r.id
-//                    }),
-//                    body: this.body
-//                }).then(() => {
-//                    this.recipients = []
-//                    this.body = null
-//                })
-//            }
+            ...mapActions([
+                'createConversation'
+            ]),
+            addRecipient (recipient) {
+
+                var existing = this.recipients.find((r) => {
+                    return r.id === recipient.id
+                })
+
+                if (typeof existing !== 'undefined') {
+                    return //если такой пользователь уже в списке то не добавляем
+                }
+
+                this.recipients.push(recipient)
+            },
+            removeRecipient (recipient) {
+                this.recipients = this.recipients.filter((r) => {
+                    return r.id !== recipient.id
+                })
+            },
+            send () {
+                this.createConversation({
+                    recipientIds: this.recipients.map((r) => {
+                        return r.id
+                    }),
+                    body: this.body
+                }).then(() => {
+                    this.recipients = []
+                    this.body = null
+                })
+            }
         },
         mounted () {
-            userautocomplete('#users');
-//            var users = userautocomplete('#users').on('autocomplete:selected', (e, selection) => {
-//                this.addRecipient(selection)
-//                users.autocomplete.setVal('')
-//            })
+           // userautocomplete('#users');
+
+            var users = userautocomplete('#users').on('autocomplete:selected', (e, selection) => {
+                this.addRecipient(selection)
+                users.autocomplete.setVal('')
+            })
         }
     }
 </script>

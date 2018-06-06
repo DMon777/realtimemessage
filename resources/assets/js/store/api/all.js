@@ -22,4 +22,23 @@ export default {
             })
         })
     },
+    storeConversation ({body, recipientIds}) {
+        return new Promise((resolve, reject) => {
+            axios.post('/webapi/conversations', {
+                body: body,
+                recipients: recipientIds
+            }).then((response) => {
+                resolve(response)
+            })
+        })
+    },
+    storeConversationUsers (id, {recipientIds}) {
+        return new Promise((resolve, reject) => {
+            axios.post('/webapi/conversations/' + id + '/users', {
+                recipients: recipientIds
+            }).then((response) => {
+                resolve(response)
+            })
+        })
+    }
 }

@@ -23,6 +23,19 @@ const actions = {
             commit('setConversationsLoading', false)
         })
 
+        /* не работает ошибка 500
+         * p.s заработало, ошибка была из-за того что в channels указал user.* а надо было user.{userId}
+          * */
+        Echo.private('user.' + Laravel.user.id)
+            .listen('ConversationCreated', (e) => {
+                commit('prependToConversations', e.data)
+            })
+            .listen('ConversationReplyCreated', (e) => {
+                commit('prependToConversations', e.data.parent.data)
+            })
+            .listen('ConversationUsersCreated', (e) => {
+                commit('updateConversationInList', e.data)
+            })
     },
 }
 
@@ -42,6 +55,15 @@ const mutations = {
 
          state.conversations.unshift(conversation)
     },
+    updateConversationInList (state, conversation) {
+        state.conversations = state.conversations.map((c) => {
+            if (c.id == conversation.id) {
+                return conversation
+            }
+
+            return c
+        })
+    }
 }
 
 const modules = {

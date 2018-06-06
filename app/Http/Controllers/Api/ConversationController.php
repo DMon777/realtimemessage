@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Conversation;
 use App\Http\Requests\StoreConversationRequest;
 
+use App\Events\ConversationCreated;
+
 use App\Transformers\ConversationTransformer;
 
 class ConversationController extends Controller
@@ -61,9 +63,10 @@ class ConversationController extends Controller
             array_merge($request->recipients, [$request->user()->id])
         ));
 
-//        $conversation->load('users');
-//
-//        broadcast(new ConversationCreated($conversation))->toOthers();
+        $conversation->load('users');
+
+        /* не распространять на текущего пользователя */
+        broadcast(new ConversationCreated($conversation))->toOthers();
 
         return fractal()
             ->item($conversation)
